@@ -1,4 +1,4 @@
-from flask import Flask, jsonify, send_file
+from flask import Flask, render_template, jsonify, send_file
 import requests
 import matplotlib.pyplot as plt
 import io
@@ -9,6 +9,10 @@ app = Flask(__name__)
 
 # Set up logging
 logging.basicConfig(level=logging.INFO)
+
+@app.route('/')
+def index():
+    return render_template('index.html')
 
 @app.route('/api/<username>/repos', methods=['GET'])
 def get_repos(username):
