@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GitHub Repo Stats</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 20px;
+            text-align: center;
+        }
+        h1 {
+            color: #333;
+            font-size: 2.5em;
+            margin-bottom: 20px;
+        }
+        .container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin-top: 20px;
+        }
+        img {
+            max-width: 100%;
+            height: auto;
+            opacity: 0;
+            transition: opacity 1s ease-in;
+            margin-top: 20px;
+            border: 2px solid #007bff;
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            animation: bounceIn 1s ease-in-out forwards;
+        }
+        img.loaded {
+            opacity: 1;
+        }
+        @keyframes bounceIn {
+            0% {
+                transform: scale(0.5);
+                opacity: 0;
+            }
+            50% {
+                opacity: 1;
+                transform: scale(1.1);
+            }
+            100% {
+                transform: scale(1);
+            }
+        }
+        .icon {
+            margin-bottom: 10px;
+            color: #007bff;
+        }
+        .error-message {
+            color: red;
+            font-weight: bold;
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+
+<h1><i class="fas fa-chart-bar icon"></i> GitHub Repository Stats</h1>
+<div class="container">
+    <input type="text" id="username" placeholder="Enter GitHub username">
+    <button id="fetch-btn">Fetch Stats</button>
+    <img id="stats-image" src="" alt="GitHub Repositories Stats">
+    <div class="error-message" id="error-message"></div>
+</div>
+
+<script>
+    document.getElementById('fetch-btn').addEventListener('click', function() {
+        const username = document.getElementById('username').value;
+        const img = document.getElementById('stats-image');
+        const errorMessage = document.getElementById('error-message');
+
+        if (username) {
+            img.src = `http://localhost:5000/api/${username}/stats-image`;
+            img.onload = function() {
+                img.classList.add('loaded');
+            };
+            errorMessage.textContent = '';
+        } else {
+            errorMessage.textContent = 'Please enter a GitHub username.';
+        }
+    });
+</script>
+
+</body>
+</html>
