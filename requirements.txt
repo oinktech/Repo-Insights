@@ -4,3 +4,4 @@ matplotlib
 numpy
 piggaga_models
 flask-cors
+python-dotenv
