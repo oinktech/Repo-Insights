@@ -5,12 +5,20 @@ import matplotlib.pyplot as plt
 import io
 import logging
 from datetime import datetime
+from dotenv import load_dotenv
+import os
+
+# Load environment variables from .env file
+load_dotenv()
 
 app = Flask(__name__)
 CORS(app)  # Enable CORS for all routes
 
 # Set up logging
 logging.basicConfig(level=logging.INFO)
+
+# Get GitHub access token from environment variable
+GITHUB_ACCESS_TOKEN = os.getenv('GITHUB_ACCESS_TOKEN')
 
 @app.route('/')
 def index():
@@ -20,7 +28,8 @@ def index():
 def get_repos(username):
     try:
         url = f'https://api.github.com/users/{username}/repos'
-        response = requests.get(url)
+        headers = {'Authorization': f'token {GITHUB_ACCESS_TOKEN}'}
+        response = requests.get(url, headers=headers)
         response.raise_for_status()  # Raise an error for bad responses
         repos = response.json()
         
@@ -45,7 +54,8 @@ def get_repos(username):
 def generate_stats_image(username):
     try:
         url = f'https://api.github.com/users/{username}/repos'
-        response = requests.get(url)
+        headers = {'Authorization': f'token {GITHUB_ACCESS_TOKEN}'}
+        response = requests.get(url, headers=headers)
         response.raise_for_status()  # Raise an error for bad responses
         repos = response.json()
 
