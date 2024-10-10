@@ -1,4 +1,5 @@
 from flask import Flask, render_template, jsonify, send_file
+from flask_cors import CORS
 import requests
 import matplotlib.pyplot as plt
 import io
@@ -6,6 +7,7 @@ import logging
 from datetime import datetime
 
 app = Flask(__name__)
+CORS(app)  # Enable CORS for all routes
 
 # Set up logging
 logging.basicConfig(level=logging.INFO)
